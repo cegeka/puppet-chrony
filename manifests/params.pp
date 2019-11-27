@@ -19,6 +19,9 @@ class chrony::params {
   $lock_all           = false
   $clientloglimit     = undef
   $cmdport            = undef
+  $smoothtime         = undef
+  $leapsecmode        = undef
+  $maxslewrate        = undef
 
   case $::osfamily {
     'Archlinux' : {
@@ -62,18 +65,12 @@ class chrony::params {
 
   $config_keys_template = 'chrony/chrony.keys.erb'
   $package_name         = 'chrony'
-
-  if ($servers == undef) {
-    $servers              = {
-      '0.pool.ntp.org' => ['iburst'],
-      '1.pool.ntp.org' => ['iburst'],
-      '2.pool.ntp.org' => ['iburst'],
-      '3.pool.ntp.org' => ['iburst'],
+  $servers              = {
+    '0.pool.ntp.org' => ['iburst'],
+    '1.pool.ntp.org' => ['iburst'],
+    '2.pool.ntp.org' => ['iburst'],
+    '3.pool.ntp.org' => ['iburst'],
   }
-  } else {
-    $servers = $servers
-  }
-
   $pools                = {}
   $makestep_seconds = 10
   $makestep_updates = 3
